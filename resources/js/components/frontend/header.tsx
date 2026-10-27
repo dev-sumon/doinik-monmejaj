@@ -1,4 +1,10 @@
-import { BadgeCheckIcon, BellIcon, ChevronDownIcon, CoffeeIcon, NotebookPenIcon } from "lucide-react";
+import {
+    BadgeCheckIcon,
+    BellIcon,
+    ChevronDownIcon,
+    CoffeeIcon,
+    NotebookPenIcon,
+} from 'lucide-react';
 
 const navItems = [
     { label: 'প্রচ্ছদ', href: '#', current: true },
@@ -11,24 +17,34 @@ const navItems = [
 export default function Header() {
     return (
         <header className="bg-surface/95 fixed top-0 right-0 left-0 z-50 backdrop-blur-md">
-            <div className="px-margin-mobile md:px-margin-tablet lg:px-margin mx-auto flex h-28 max-w-[1380px] flex-col justify-between pt-space-xs">
-                <div className="gap-space-md flex items-center justify-between py-space-xs">
-                    <div className="gap-space-md flex items-center">
-                        <a className="gap-space-sm group flex items-center" href="#">
-                            <span className="font-masthead-mobile text-masthead-mobile md:font-headline-lg md:text-headline-lg text-brand font-bold tracking-tight">
+            <div className="px-margin-mobile md:px-margin-tablet lg:px-margin mx-auto flex max-w-[1380px] flex-col justify-between py-space-xs">
+                <div className="gap-space-sm sm:gap-space-md flex min-w-0 items-center justify-between py-space-xs">
+                    <div className="gap-space-md flex min-w-0 items-center">
+                        <a
+                            className="gap-space-sm group flex min-w-0 items-center"
+                            href="#"
+                        >
+                            <span className="font-masthead-mobile text-masthead-mobile md:font-headline-lg md:text-headline-lg text-brand truncate font-bold tracking-tight">
                                 আজকের কাগজ
                             </span>
-                            <span className="font-label-dateline text-label-dateline text-warm border-outline-variant hidden border-l pl-space-sm italic xl:inline-block">
+                            <span className="font-label-dateline text-label-dateline text-warm border-outline-variant hidden shrink-0 border-l pl-space-sm italic xl:inline-block">
                                 একটি সামাজিক দৈনিক পত্রিকা
                             </span>
                         </a>
                     </div>
-                    <div className="gap-space-md flex items-center">
+                    <div className="gap-space-sm sm:gap-space-md flex shrink-0 items-center">
+                        <button
+                            aria-label="পত্রিকা তৈরি করুন"
+                            className="bg-brand text-on-brand hover:bg-brand-container inline-flex items-center justify-center p-space-xs transition-colors sm:hidden"
+                            type="button"
+                        >
+                            <NotebookPenIcon className="h-5 w-5" />
+                        </button>
                         <button
                             className="bg-brand text-on-brand hover:bg-brand-container gap-space-xs px-space-md py-space-xs font-label-editorial text-label-editorial hidden items-center transition-colors sm:inline-flex"
                             type="button"
                         >
-                            <NotebookPenIcon className="w-5 h-5" />
+                            <NotebookPenIcon className="h-5 w-5" />
                             <span>পত্রিকা তৈরি করুন</span>
                         </button>
                         <button
@@ -36,9 +52,7 @@ export default function Header() {
                             className="text-on-surface-variant hover:text-on-surface relative p-space-xs transition-colors"
                             type="button"
                         >
-                            <span className="material-symbols-outlined">
-                                <BellIcon className="w-5 h-5" />
-                            </span>
+                            <BellIcon className="h-5 w-5" />
                             <span className="bg-brand absolute top-1 right-1 h-2 w-2 rounded-full" />
                         </button>
                         <div className="border-outline-variant gap-space-sm flex items-center border-l pl-space-xs">
@@ -52,27 +66,23 @@ export default function Header() {
                                     <span className="font-label-editorial text-label-editorial text-on-surface font-semibold">
                                         ফারহানা আহমেদ
                                     </span>
-                                    <span className="material-symbols-outlined text-brand text-[14px]">
-                                        <BadgeCheckIcon className="w-4 h-4" />
-                                    </span>
+                                    <BadgeCheckIcon className="text-brand h-4 w-4" />
                                 </div>
                                 <span className="font-caption text-caption text-warm">
                                     সম্পাদক মণ্ডলী
                                 </span>
                             </div>
-                            <span className="material-symbols-outlined text-on-surface-variant cursor-pointer text-[18px]">
-                                <ChevronDownIcon className="w-5 h-5" />
-                            </span>
+                            <ChevronDownIcon className="text-on-surface-variant hidden h-5 w-5 cursor-pointer sm:block" />
                         </div>
                     </div>
                 </div>
-                <div className="border-outline-variant flex items-center justify-between border-t border-b">
-                    <nav className="gap-space-lg flex items-center overflow-x-auto py-space-xs">
+                <div className="border-outline-variant flex min-w-0 items-center justify-between border-t border-b">
+                    <nav className="gap-space-md sm:gap-space-lg -mx-margin-mobile px-margin-mobile md:mx-0 md:px-0 flex min-w-0 flex-1 items-center overflow-x-auto py-space-xs">
                         {navItems.map((item) =>
                             item.current ? (
                                 <a
                                     aria-current="page"
-                                    className="text-brand border-brand whitespace-nowrap border-b-2 py-1 font-semibold transition-colors"
+                                    className="text-brand border-brand shrink-0 whitespace-nowrap border-b-2 py-1 font-semibold transition-colors"
                                     href={item.href}
                                     key={item.label}
                                 >
@@ -80,7 +90,7 @@ export default function Header() {
                                 </a>
                             ) : (
                                 <a
-                                    className="font-label-editorial text-label-editorial text-on-surface-variant hover:text-on-surface whitespace-nowrap py-1 transition-colors"
+                                    className="font-label-editorial text-label-editorial text-on-surface-variant hover:text-on-surface shrink-0 whitespace-nowrap py-1 transition-colors"
                                     href={item.href}
                                     key={item.label}
                                 >
@@ -89,26 +99,30 @@ export default function Header() {
                             ),
                         )}
                     </nav>
-                    <div className="font-label-dateline text-label-dateline text-warm gap-space-sm hidden items-center lg:flex">
-                        <span className="material-symbols-outlined text-[15px]">
-                            <CoffeeIcon className="w-4 h-4" />
-                        </span>
+                    <div className="font-label-dateline text-label-dateline text-warm gap-space-sm ml-space-md hidden shrink-0 items-center lg:flex">
+                        <CoffeeIcon className="h-4 w-4" />
                         <span>চা, অলসতা ও কাজের চাপ</span>
                     </div>
                 </div>
             </div>
             <div className="bg-surface-container-low border-outline-variant border-b">
-                <div className="px-margin-mobile md:px-margin-tablet lg:px-margin font-label-dateline text-label-dateline text-on-surface-variant mx-auto flex max-w-[1380px] items-center justify-between py-1">
-                    <div className="flex items-center gap-2">
-                        <span>আজকের তারিখ: ১৫ চৈত্র, ১৪৩০ বঙ্গাব্দ</span>
-                        <span className="text-outline-variant">|</span>
+                <div className="px-margin-mobile md:px-margin-tablet lg:px-margin font-label-dateline text-label-dateline text-on-surface-variant mx-auto flex max-w-[1380px] flex-col gap-1 py-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-2 sm:py-1">
+                    <div className="flex min-w-0 flex-wrap items-center gap-2">
+                        <span className="truncate">
+                            আজকের তারিখ: ১৫ চৈত্র, ১৪৩০ বঙ্গাব্দ
+                        </span>
+                        <span className="text-outline-variant hidden sm:inline">
+                            |
+                        </span>
                         <span className="text-brand font-semibold">
                             বিশেষ সংস্করণ
                         </span>
                     </div>
-                    <div className="gap-space-md flex items-center">
-                        <span className="hidden sm:inline">ঢাকা, বাংলাদেশ</span>
-                        <span className="text-warm italic">
+                    <div className="gap-space-md hidden min-w-0 items-center sm:flex">
+                        <span className="hidden shrink-0 md:inline">
+                            ঢাকা, বাংলাদেশ
+                        </span>
+                        <span className="text-warm truncate italic">
                             "আপনার জীবনের ছোট ছোট আনন্দ আর স্মৃতির বিশ্বস্ত
                             সংকলন"
                         </span>

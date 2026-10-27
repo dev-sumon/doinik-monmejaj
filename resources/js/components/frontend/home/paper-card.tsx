@@ -1,23 +1,11 @@
 import { Icon } from '@/components/ui/icon';
-import { BookmarkIcon, LucideIcon, MessageSquareIcon, Share2Icon } from 'lucide-react';
+import { BookmarkIcon, MessageSquareIcon, Share2Icon } from 'lucide-react';
 import { useState } from 'react';
-
-export type PaperCardProps = {
-    category: string;
-    time: string;
-    imageSrc: string;
-    imageAlt: string;
-    title: string;
-    excerpt: string;
-    authorInitial: string;
-    authorName: string;
-    authorLocation: string;
-    authorBadgeClassName: string;
-    reactionIcon: LucideIcon;
-    reactionLabel: string;
-    commentCount: string;
-    bookmarked?: boolean;
-};
+import {
+    resolveReactionIcon,
+    toneBadgeClass,
+    type FeaturedPaper,
+} from './types';
 
 export default function PaperCard({
     category,
@@ -29,49 +17,50 @@ export default function PaperCard({
     authorInitial,
     authorName,
     authorLocation,
-    authorBadgeClassName,
+    tone,
     reactionIcon,
     reactionLabel,
     commentCount,
     bookmarked = false,
-}: PaperCardProps) {
+}: FeaturedPaper) {
     const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+    const ReactionIcon = resolveReactionIcon(reactionIcon);
 
     return (
-        <article className="flex flex-col justify-between bg-surface-container-lowest p-space-md shadow-md transition-all duration-300 hover:-translate-y-1">
+        <article className="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-md transition-all duration-300 hover:-translate-y-1">
             <div className="space-y-space-sm">
-                <div className="flex items-center justify-between bg-surface-container-low px-space-sm py-1">
-                    <span className="font-label-editorial text-label-editorial font-bold text-brand">
+                <div className="bg-surface-container-low flex flex-wrap items-center justify-between gap-1 px-space-sm py-1">
+                    <span className="font-label-editorial text-label-editorial text-brand min-w-0 font-bold">
                         {category}
                     </span>
-                    <span className="font-caption text-caption text-warm">
+                    <span className="font-caption text-caption text-warm shrink-0">
                         {time}
                     </span>
                 </div>
-                <div className="h-48 w-full overflow-hidden bg-surface-container">
+                <div className="bg-surface-container h-48 w-full overflow-hidden">
                     <img
                         alt={imageAlt}
                         className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                         src={imageSrc}
                     />
                 </div>
-                <h3 className="cursor-pointer font-headline-sm text-headline-sm leading-snug font-bold text-on-surface transition-colors hover:text-brand">
+                <h3 className="font-headline-sm text-headline-sm text-on-surface hover:text-brand cursor-pointer leading-snug font-bold transition-colors">
                     {title}
                 </h3>
-                <p className="line-clamp-3 text-justify font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
+                <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-3 text-justify leading-relaxed">
                     {excerpt}
                 </p>
             </div>
             <div className="-mx-space-md mt-space-md -mb-space-md space-y-space-xs bg-surface-container-low p-space-sm pt-space-md">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-space-xs">
+                    <div className="gap-space-xs flex items-center">
                         <div
-                            className={`flex h-7 w-7 items-center justify-center font-label-dateline text-label-dateline font-bold ${authorBadgeClassName}`}
+                            className={`font-label-dateline text-label-dateline flex h-7 w-7 items-center justify-center font-bold ${toneBadgeClass[tone]}`}
                         >
                             {authorInitial}
                         </div>
                         <div className="flex flex-col">
-                            <span className="font-label-editorial text-label-editorial leading-none font-bold text-on-surface">
+                            <span className="font-label-editorial text-label-editorial text-on-surface leading-none font-bold">
                                 {authorName}
                             </span>
                             <span className="font-caption text-caption text-warm">
@@ -81,38 +70,26 @@ export default function PaperCard({
                     </div>
                     <button
                         aria-label="সংরক্ষণ"
-                        className="text-on-surface-variant transition-colors hover:text-brand"
+                        className="text-on-surface-variant hover:text-brand transition-colors"
                         type="button"
                         onClick={() => setIsBookmarked((value) => !value)}
                     >
-                        <span
-                            className={`material-symbols-outlined text-[19px] ${isBookmarked ? 'text-brand' : ''}`}
-                        >
-                            {isBookmarked ? (
-                                <BookmarkIcon className="h-4 w-4" />
-                            ) : (
-                                <BookmarkIcon className="h-4 w-4" />
-                            )}
-                        </span>
+                        <BookmarkIcon
+                            className={`h-4 w-4 ${isBookmarked ? 'text-brand' : ''}`}
+                        />
                     </button>
                 </div>
-                <div className="flex items-center justify-between pt-1 font-caption text-caption text-warm">
-                    <span className="flex items-center gap-1 font-medium text-brand">
-                        <span className="material-symbols-outlined text-[16px]">
-                            <Icon iconNode={reactionIcon} />
-                        </span>
+                <div className="font-caption text-caption text-warm flex flex-wrap items-center justify-between gap-x-2 gap-y-1 pt-1">
+                    <span className="text-brand flex items-center gap-1 font-medium">
+                        <Icon className="h-4 w-4" iconNode={ReactionIcon} />
                         <span>{reactionLabel}</span>
                     </span>
                     <span className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[16px]">
-                        <MessageSquareIcon className="w-4 h-4" />
-                        </span>
+                        <MessageSquareIcon className="h-4 w-4" />
                         <span>{commentCount}</span>
                     </span>
-                    <span className="flex cursor-pointer items-center gap-1 hover:text-on-surface">
-                        <span className="material-symbols-outlined text-[16px]">
-                        <Share2Icon className="w-4 h-4" />
-                        </span>
+                    <span className="hover:text-on-surface flex cursor-pointer items-center gap-1">
+                        <Share2Icon className="h-4 w-4" />
                         <span>ভাগ করুন</span>
                     </span>
                 </div>

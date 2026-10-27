@@ -1,4 +1,4 @@
-import { FileClock } from "lucide-react";
+import { FileClock } from 'lucide-react';
 
 const aboutLinks = [
     { label: 'আমাদের গল্প', href: '#' },
@@ -29,7 +29,7 @@ function FooterLinkColumn({
     links: { label: string; href: string }[];
 }) {
     return (
-        <div>
+        <div className="min-w-0">
             <h4 className="font-label-editorial text-label-editorial text-on-surface mb-space-sm font-semibold">
                 {title}
             </h4>
@@ -53,19 +53,17 @@ export default function Footer() {
     return (
         <footer className="bg-surface-container-low border-brand mt-space-xl w-full border-t-2">
             <div className="px-margin-mobile md:px-margin-tablet lg:px-margin pt-space-xl pb-space-lg mx-auto max-w-[1380px]">
-                <div className="gap-space-lg border-outline-variant pb-space-lg grid grid-cols-1 border-b md:grid-cols-2 lg:grid-cols-5">
-                    <div className="pr-space-md lg:col-span-2">
+                <div className="gap-space-lg border-outline-variant pb-space-lg grid grid-cols-1 border-b sm:grid-cols-2 lg:grid-cols-5">
+                    <div className="sm:col-span-2 lg:col-span-2 lg:pr-space-md">
                         <h3 className="font-headline-sm text-headline-sm text-brand mb-space-xs font-bold">
                             আজকের কাগজ
                         </h3>
-                        <p className="font-lead text-lead text-on-surface-variant mb-space-md">
+                        <p className="font-body-md text-body-md md:font-lead md:text-lead text-on-surface-variant mb-space-md">
                             একটি মানবিক, সংবেদনশীল এবং খাঁটি সামাজিক পত্রিকা যা
                             প্রতিদিনের অনুভূতির দলিল রক্ষা করে।
                         </p>
                         <div className="gap-space-sm font-label-editorial text-label-editorial text-warm flex items-center">
-                            <span className="material-symbols-outlined text-[18px]">
-                            <FileClock className="w-4 h-4" />
-                            </span>
+                            <FileClock className="h-4 w-4 shrink-0" />
                             <span>মুদ্রিত ঐতিহ্য ও ডিজিটাল মেলবন্ধন</span>
                         </div>
                     </div>
@@ -82,12 +80,12 @@ export default function Footer() {
                         links={contactLinks}
                     />
                 </div>
-                <div className="pt-space-md gap-space-sm font-caption text-caption text-on-surface-variant flex flex-col items-center justify-between text-center md:flex-row md:text-left">
-                    <p>
+                <div className="pt-space-md gap-space-sm font-caption text-caption text-on-surface-variant flex flex-col flex-wrap items-center justify-between text-center md:flex-row md:text-left">
+                    <p className="max-w-prose">
                         © ১৪৩০ আজকের কাগজ — আপনার জীবনের ছোট ছোট আনন্দ আর
                         স্মৃতির বিশ্বস্ত সংকলন। সর্বস্বত্ব সংরক্ষিত।
                     </p>
-                    <div className="gap-space-md flex items-center">
+                    <div className="gap-space-md flex flex-wrap items-center justify-center">
                         <span className="text-warm font-label-dateline text-label-dateline">
                             হরফ ও ছাপাখানা সংস্করণ ১.০
                         </span>

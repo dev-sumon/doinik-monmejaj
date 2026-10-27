@@ -1,15 +1,19 @@
-import { howItWorksSteps } from './data';
 import HowItWorksStep from './how-it-works-step';
+import type { HowItWorksStep as HowItWorksStepData } from './types';
 
-export default function HowItWorks() {
+export default function HowItWorks({
+    howItWorksSteps,
+}: {
+    howItWorksSteps: HowItWorksStepData[];
+}) {
     return (
-        <section className="bg-surface-container-low py-space-xl w-full">
+        <section className="bg-surface-container-low py-space-lg md:py-space-xl w-full">
             <div className="px-margin-mobile md:px-margin-tablet lg:px-margin space-y-space-xl mx-auto max-w-[1380px]">
                 <div className="space-y-space-xs mx-auto max-w-2xl text-center">
                     <span className="font-label-editorial text-label-editorial text-brand font-bold tracking-widest uppercase">
                         সহজ সম্পাদকীয় প্রণালী
                     </span>
-                    <h2 className="font-headline-lg text-headline-lg text-on-surface font-bold">
+                    <h2 className="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface font-bold">
                         কীভাবে কাজ করে ‘আজকের কাগজ’?
                     </h2>
                     <p className="font-body-md text-body-md text-on-surface-variant">

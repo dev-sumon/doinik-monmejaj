@@ -1,14 +1,9 @@
-import { Icon } from "@/components/ui/icon";
-import { LucideIcon } from "lucide-react";
-
-export type HowItWorksStepProps = {
-    step: string;
-    title: string;
-    description: string;
-    footerIcon: LucideIcon;
-    footerLabel: string;
-    badgeClassName: string;
-};
+import { Icon } from '@/components/ui/icon';
+import {
+    resolveStepIcon,
+    toneBadgeClass,
+    type HowItWorksStep as HowItWorksStepData,
+} from './types';
 
 export default function HowItWorksStep({
     step,
@@ -16,13 +11,15 @@ export default function HowItWorksStep({
     description,
     footerIcon,
     footerLabel,
-    badgeClassName,
-}: HowItWorksStepProps) {
+    tone,
+}: HowItWorksStepData) {
+    const FooterIcon = resolveStepIcon(footerIcon);
+
     return (
         <div className="bg-surface p-space-lg group relative flex flex-col justify-between shadow-sm transition-all hover:bg-surface-container-lowest">
             <div className="space-y-space-sm">
                 <div
-                    className={`font-headline-sm text-headline-sm flex h-12 w-12 items-center justify-center font-bold ${badgeClassName}`}
+                    className={`font-headline-sm text-headline-sm flex h-12 w-12 items-center justify-center font-bold ${toneBadgeClass[tone]}`}
                 >
                     {step}
                 </div>
@@ -34,9 +31,7 @@ export default function HowItWorksStep({
                 </p>
             </div>
             <div className="pt-space-md text-warm font-label-dateline text-label-dateline flex items-center gap-1">
-                <span className="material-symbols-outlined text-[16px]">
-                    <Icon iconNode={footerIcon} className="w-4 h-4" />
-                </span>
+                <Icon className="h-4 w-4" iconNode={FooterIcon} />
                 <span>{footerLabel}</span>
             </div>
         </div>

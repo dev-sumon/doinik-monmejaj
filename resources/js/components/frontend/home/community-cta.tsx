@@ -1,32 +1,21 @@
-import { FileClock, PencilRuler } from "lucide-react";
+import { FileClock, PencilRuler } from 'lucide-react';
+import type { CommunityContent } from './types';
 
-const stats = [
-    {
-        value: '১২,৪৫০+',
-        label: 'প্রকাশিত ব্যক্তিগত পত্রিকা',
-        caption: 'প্রতিদিন জমা পড়ছে সহস্রাধিক গল্প',
-    },
-    {
-        value: '৮৫,০০০+',
-        label: 'পাঠক প্রতিক্রিয়া ও সমবেদনা',
-        caption: 'হাসি, আড্ডা আর গভীর মানবিক মেলবন্ধন',
-    },
-    {
-        value: '৩,২০০+',
-        label: 'দৈনিক সক্রিয় লেখক',
-        caption: 'ছাত্র, পেশাজীবী ও স্বপ্নবাজ নাগরিক',
-    },
-];
+export default function CommunityCta({
+    community,
+}: {
+    community: CommunityContent;
+}) {
+    const { stats, cta } = community;
 
-export default function CommunityCta() {
     return (
-        <section className="bg-surface py-space-xl w-full">
-            <div className="px-margin-mobile md:px-margin-tablet lg:px-margin space-y-space-xl mx-auto max-w-[1380px]">
-                <div className="bg-surface-container-low p-space-lg shadow-sm">
+        <section className="bg-surface py-space-lg md:py-space-xl w-full">
+            <div className="px-margin-mobile md:px-margin-tablet lg:px-margin space-y-space-lg md:space-y-space-xl mx-auto max-w-[1380px]">
+                <div className="bg-surface-container-low p-space-md sm:p-space-lg shadow-sm">
                     <div className="gap-space-lg grid grid-cols-1 items-center text-center md:grid-cols-3">
                         {stats.map((stat) => (
                             <div className="space-y-1" key={stat.label}>
-                                <div className="font-headline-xl text-headline-xl text-brand font-bold tracking-tight">
+                                <div className="font-headline-xl-mobile text-headline-xl-mobile md:font-headline-xl md:text-headline-xl text-brand font-bold tracking-tight">
                                     {stat.value}
                                 </div>
                                 <div className="font-label-editorial text-label-editorial text-on-surface font-semibold">
@@ -39,40 +28,33 @@ export default function CommunityCta() {
                         ))}
                     </div>
                 </div>
-                <div className="bg-surface-container-lowest p-space-lg md:p-space-xl space-y-space-md relative mx-auto max-w-4xl overflow-hidden text-center shadow-md">
+                <div className="bg-surface-container-lowest p-space-md sm:p-space-lg md:p-space-xl space-y-space-md relative mx-auto max-w-4xl overflow-hidden text-center shadow-md">
                     <div className="bg-brand/10 text-brand mb-space-xs mx-auto flex h-12 w-12 items-center justify-center rounded-full">
-                        <span className="material-symbols-outlined text-[28px]">
-                            <PencilRuler className="w-4 h-4" />
-                        </span>
+                        <PencilRuler className="h-6 w-6" />
                     </div>
-                    <h2 className="font-headline-lg text-headline-lg text-on-surface mx-auto max-w-xl leading-snug font-bold">
-                        আজকের দিনটি হারিয়ে যাওয়ার আগেই পত্রিকার পাতায় ধরে রাখুন।
+                    <h2 className="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mx-auto max-w-xl leading-snug font-bold">
+                        {cta.title}
                     </h2>
-                    <p className="font-lead text-lead text-on-surface-variant mx-auto max-w-lg">
-                        দিনশেষে চায়ের কাপে যখন ধোঁয়া উড়বে, তখন স্মৃতিগুলো যেন
-                        ফিকে না হয়ে যায়। একটি পাতার সৃষ্টি আপনাকে চিরদিনের মতো
-                        ফিরিয়ে দেবে এই মুহূর্তটিকে।
+                    <p className="font-body-md text-body-md md:font-lead md:text-lead text-on-surface-variant mx-auto max-w-lg">
+                        {cta.lead}
                     </p>
-                    <div className="pt-space-sm gap-space-md flex flex-col items-center justify-center sm:flex-row">
+                    <div className="pt-space-sm gap-space-md flex w-full flex-col items-stretch justify-center sm:flex-row sm:items-center">
                         <a
-                            className="bg-brand text-on-brand hover:bg-brand-container gap-space-xs px-space-xl py-space-sm font-headline-sm text-headline-sm flex items-center font-bold shadow-md transition-all"
-                            href="#"
+                            className="bg-brand text-on-brand hover:bg-brand-container gap-space-xs px-space-xl py-space-sm font-headline-sm text-headline-sm flex w-full items-center justify-center font-bold shadow-md transition-all sm:w-auto"
+                            href={cta.primaryCta.href}
                         >
-                            <span className="material-symbols-outlined text-[22px]">
-                                <FileClock className="w-4 h-4" />
-                            </span>
-                            <span>এখনই শুরু করুন</span>
+                            <FileClock className="h-5 w-5" />
+                            <span>{cta.primaryCta.label}</span>
                         </a>
                         <a
-                            className="bg-surface-container text-warm hover:bg-surface-container-high px-space-lg py-space-sm font-label-editorial text-label-editorial font-bold transition-colors"
-                            href="#"
+                            className="bg-surface-container text-warm hover:bg-surface-container-high px-space-lg py-space-sm font-label-editorial text-label-editorial w-full text-center font-bold transition-colors sm:w-auto"
+                            href={cta.secondaryCta.href}
                         >
-                            নিয়মাবলী ও নির্দেশিকা জেনে নিন
+                            {cta.secondaryCta.label}
                         </a>
                     </div>
-                    <div className="pt-space-sm font-label-dateline text-label-dateline text-warm italic">
-                        * কোনো ক্রেডিট কার্ড বা নিবন্ধনের ঝামেলা নেই। সম্পূর্ণ
-                        বিনামূল্যে আপনার বাংলা দৈনিক সাজান।
+                    <div className="pt-space-sm font-label-dateline text-label-dateline text-warm px-space-xs italic">
+                        {cta.footnote}
                     </div>
                 </div>
             </div>
