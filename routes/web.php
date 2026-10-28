@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FileUploadDemoController;
+use App\Http\Controllers\Frontend\CommunityFeedController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\PostAttachmentController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
@@ -16,6 +17,7 @@ use Laravel\Fortify\Features;
 // ])->name('home');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/community-feed', [CommunityFeedController::class, 'index'])->name('community-feed');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');

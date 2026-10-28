@@ -1,3 +1,4 @@
+import { Link, usePage } from '@inertiajs/react';
 import {
     BadgeCheckIcon,
     BellIcon,
@@ -5,24 +6,28 @@ import {
     CoffeeIcon,
     NotebookPenIcon,
 } from 'lucide-react';
+import { communityFeed, home } from '@/routes';
 
 const navItems = [
-    { label: 'প্রচ্ছদ', href: '#', current: true },
-    { label: 'ঘুরে দেখুন', href: '#' },
+    { label: 'প্রচ্ছদ', href: home.url() },
+    { label: 'ঘুরে দেখুন', href: communityFeed.url() },
     { label: 'আজকের বিষয়', href: '#' },
     { label: 'জনমত', href: '#' },
     { label: 'আমার পত্রিকা', href: '#' },
 ];
 
 export default function Header() {
+    const { url } = usePage();
+    const currentPath = url.split('?')[0] ?? '/';
+
     return (
         <header className="bg-surface/95 fixed top-0 right-0 left-0 z-50 backdrop-blur-md">
             <div className="px-margin-mobile md:px-margin-tablet lg:px-margin mx-auto flex max-w-[1380px] flex-col justify-between py-space-xs">
                 <div className="gap-space-sm sm:gap-space-md flex min-w-0 items-center justify-between py-space-xs">
                     <div className="gap-space-md flex min-w-0 items-center">
-                        <a
+                        <Link
                             className="gap-space-sm group flex min-w-0 items-center"
-                            href="#"
+                            href={home()}
                         >
                             <span className="font-masthead-mobile text-masthead-mobile md:font-headline-lg md:text-headline-lg text-brand truncate font-bold tracking-tight">
                                 আজকের কাগজ
@@ -30,7 +35,7 @@ export default function Header() {
                             <span className="font-label-dateline text-label-dateline text-warm border-outline-variant hidden shrink-0 border-l pl-space-sm italic xl:inline-block">
                                 একটি সামাজিক দৈনিক পত্রিকা
                             </span>
-                        </a>
+                        </Link>
                     </div>
                     <div className="gap-space-sm sm:gap-space-md flex shrink-0 items-center">
                         <button
@@ -78,26 +83,44 @@ export default function Header() {
                 </div>
                 <div className="border-outline-variant flex min-w-0 items-center justify-between border-t border-b">
                     <nav className="gap-space-md sm:gap-space-lg -mx-margin-mobile px-margin-mobile md:mx-0 md:px-0 flex min-w-0 flex-1 items-center overflow-x-auto py-space-xs">
-                        {navItems.map((item) =>
-                            item.current ? (
-                                <a
+                        {navItems.map((item) => {
+                            const isActive =
+                                item.href !== '#' &&
+                                (item.href === '/'
+                                    ? currentPath === '/'
+                                    : currentPath.startsWith(item.href));
+
+                            if (item.href === '#') {
+                                return (
+                                    <a
+                                        className="font-label-editorial text-label-editorial text-on-surface-variant hover:text-on-surface shrink-0 whitespace-nowrap py-1 transition-colors"
+                                        href={item.href}
+                                        key={item.label}
+                                    >
+                                        {item.label}
+                                    </a>
+                                );
+                            }
+
+                            return isActive ? (
+                                <Link
                                     aria-current="page"
                                     className="text-brand border-brand shrink-0 whitespace-nowrap border-b-2 py-1 font-semibold transition-colors"
                                     href={item.href}
                                     key={item.label}
                                 >
                                     {item.label}
-                                </a>
+                                </Link>
                             ) : (
-                                <a
+                                <Link
                                     className="font-label-editorial text-label-editorial text-on-surface-variant hover:text-on-surface shrink-0 whitespace-nowrap py-1 transition-colors"
                                     href={item.href}
                                     key={item.label}
                                 >
                                     {item.label}
-                                </a>
-                            ),
-                        )}
+                                </Link>
+                            );
+                        })}
                     </nav>
                     <div className="font-label-dateline text-label-dateline text-warm gap-space-sm ml-space-md hidden shrink-0 items-center lg:flex">
                         <CoffeeIcon className="h-4 w-4" />
