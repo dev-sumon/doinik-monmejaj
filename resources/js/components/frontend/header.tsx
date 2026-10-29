@@ -6,7 +6,15 @@ import {
     CoffeeIcon,
     NotebookPenIcon,
 } from 'lucide-react';
-import { communityFeed, dailyTheme, home, myArchive, polls } from '@/routes';
+import {
+    communityFeed,
+    create,
+    dailyTheme,
+    home,
+    myArchive,
+    notifications,
+    polls,
+} from '@/routes';
 
 const navItems = [
     { label: 'প্রচ্ছদ', href: home.url() },
@@ -38,28 +46,28 @@ export default function Header() {
                         </Link>
                     </div>
                     <div className="gap-space-sm sm:gap-space-md flex shrink-0 items-center">
-                        <button
+                        <Link
                             aria-label="পত্রিকা তৈরি করুন"
                             className="bg-brand text-on-brand hover:bg-brand-container inline-flex items-center justify-center p-space-xs transition-colors sm:hidden"
-                            type="button"
+                            href={create.url()}
                         >
                             <NotebookPenIcon className="h-5 w-5" />
-                        </button>
-                        <button
+                        </Link>
+                        <Link
                             className="bg-brand text-on-brand hover:bg-brand-container gap-space-xs px-space-md py-space-xs font-label-editorial text-label-editorial hidden items-center transition-colors sm:inline-flex"
-                            type="button"
+                            href={create.url()}
                         >
                             <NotebookPenIcon className="h-5 w-5" />
                             <span>পত্রিকা তৈরি করুন</span>
-                        </button>
-                        <button
+                        </Link>
+                        <Link
                             aria-label="নোটিফিকেশন"
                             className="text-on-surface-variant hover:text-on-surface relative p-space-xs transition-colors"
-                            type="button"
+                            href={notifications.url()}
                         >
                             <BellIcon className="h-5 w-5" />
                             <span className="bg-brand absolute top-1 right-1 h-2 w-2 rounded-full" />
-                        </button>
+                        </Link>
                         <div className="border-outline-variant gap-space-sm flex items-center border-l pl-space-xs">
                             <img
                                 alt="Profile"

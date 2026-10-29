@@ -136,6 +136,13 @@
     --color-on-tertiary: #ffffff;
     --color-tertiary-container: #3b5c4e;
     --color-on-tertiary-container: #aed3c1;
+    --color-tertiary-fixed: #c6ebd9;
+    --color-on-tertiary-fixed: #002116;
+    --color-on-tertiary-fixed-variant: #2c4d40;
+    --color-tertiary-fixed-dim: #aacfbd;
+    --color-brand-fixed-dim: #ffb3ae;
+    --color-error: #ba1a1a;
+    --color-on-error: #ffffff;
     --color-surface: #fcf9f8;
     --color-on-surface: #1c1b1b;
     --color-on-surface-variant: #58413f;
