@@ -2,11 +2,16 @@ import { Link, usePage } from '@inertiajs/react';
 import {
     BadgeCheckIcon,
     BellIcon,
+    ChartColumnIcon,
     ChevronDownIcon,
     CoffeeIcon,
     NotebookPenIcon,
+    SettingsIcon,
+    UserRoundIcon,
 } from 'lucide-react';
+import { useEffect, useId, useRef, useState } from 'react';
 import {
+    accountSettings,
     communityFeed,
     create,
     dailyTheme,
@@ -14,6 +19,7 @@ import {
     myArchive,
     notifications,
     polls,
+    profile,
 } from '@/routes';
 
 const navItems = [
@@ -24,9 +30,59 @@ const navItems = [
     { label: 'আমার পত্রিকা', href: myArchive.url() },
 ];
 
+const menuItems = [
+    {
+        label: 'আমার প্রোফাইল',
+        href: profile.url(),
+        icon: UserRoundIcon,
+    },
+    {
+        label: 'সাপ্তাহিক রিক্যাপ',
+        href: myArchive.url(),
+        icon: ChartColumnIcon,
+    },
+    {
+        label: 'সেটিংস',
+        href: accountSettings.url(),
+        icon: SettingsIcon,
+    },
+];
+
 export default function Header() {
     const { url } = usePage();
     const currentPath = url.split('?')[0] ?? '/';
+    const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+    const menuId = useId();
+
+    useEffect(() => {
+        if (!menuOpen) {
+            return;
+        }
+
+        function handlePointerDown(event: MouseEvent): void {
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target as Node)
+            ) {
+                setMenuOpen(false);
+            }
+        }
+
+        function handleKeyDown(event: KeyboardEvent): void {
+            if (event.key === 'Escape') {
+                setMenuOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handlePointerDown);
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('mousedown', handlePointerDown);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [menuOpen]);
 
     return (
         <header className="bg-surface/95 fixed top-0 right-0 left-0 z-50 backdrop-blur-md">
@@ -68,24 +124,67 @@ export default function Header() {
                             <BellIcon className="h-5 w-5" />
                             <span className="bg-brand absolute top-1 right-1 h-2 w-2 rounded-full" />
                         </Link>
-                        <div className="border-outline-variant gap-space-sm flex items-center border-l pl-space-xs">
-                            <img
-                                alt="Profile"
-                                className="h-8 w-8 rounded-full object-cover"
-                                src="https://lh3.googleusercontent.com/aida/AEtjO1W1k6hJYyiLqukSSxLRlyDCJYmJMXmUE6jcL8TKueGpIatqc6l4NxY8_U0yNoF1e_ce-UpxX7K3UR6K4S59BUxAqWYAV6Ca3vahBbvSteT83xnUIo_KrwGjCytZp2jGdq9_hNyxV_JRFBO-uorKll3NGpAq3Tsh8ziC1-zpmkgvY4p4HrlbOUwoVjzlOhF_YkOBqGVPe9x7b01gTa3_doRI5vFuuveHK3M0ggtgKiowu7dRURcbo_T0Lw"
-                            />
-                            <div className="hidden flex-col text-left md:flex">
-                                <div className="flex items-center gap-1">
-                                    <span className="font-label-editorial text-label-editorial text-on-surface font-semibold">
-                                        ফারহানা আহমেদ
+                        <div
+                            className="border-outline-variant relative border-l pl-space-xs"
+                            ref={menuRef}
+                        >
+                            <button
+                                aria-controls={menuId}
+                                aria-expanded={menuOpen}
+                                aria-haspopup="menu"
+                                aria-label="প্রোফাইল মেনু"
+                                className="gap-space-sm flex items-center"
+                                type="button"
+                                onClick={() => setMenuOpen((open) => !open)}
+                            >
+                                <img
+                                    alt="Profile"
+                                    className="h-8 w-8 rounded-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida/AEtjO1W1k6hJYyiLqukSSxLRlyDCJYmJMXmUE6jcL8TKueGpIatqc6l4NxY8_U0yNoF1e_ce-UpxX7K3UR6K4S59BUxAqWYAV6Ca3vahBbvSteT83xnUIo_KrwGjCytZp2jGdq9_hNyxV_JRFBO-uorKll3NGpAq3Tsh8ziC1-zpmkgvY4p4HrlbOUwoVjzlOhF_YkOBqGVPe9x7b01gTa3_doRI5vFuuveHK3M0ggtgKiowu7dRURcbo_T0Lw"
+                                />
+                                <div className="hidden flex-col text-left md:flex">
+                                    <div className="flex items-center gap-1">
+                                        <span className="font-label-editorial text-label-editorial text-on-surface font-semibold">
+                                            ফারহানা আহমেদ
+                                        </span>
+                                        <BadgeCheckIcon className="text-brand h-4 w-4" />
+                                    </div>
+                                    <span className="font-caption text-caption text-warm">
+                                        সম্পাদক মণ্ডলী
                                     </span>
-                                    <BadgeCheckIcon className="text-brand h-4 w-4" />
                                 </div>
-                                <span className="font-caption text-caption text-warm">
-                                    সম্পাদক মণ্ডলী
-                                </span>
-                            </div>
-                            <ChevronDownIcon className="text-on-surface-variant hidden h-5 w-5 cursor-pointer sm:block" />
+                                <ChevronDownIcon
+                                    className={`text-on-surface-variant hidden h-5 w-5 transition-transform sm:block ${
+                                        menuOpen ? 'rotate-180' : ''
+                                    }`}
+                                />
+                            </button>
+                            {menuOpen ? (
+                                <div
+                                    className="bg-surface-container-lowest border-outline-variant absolute top-full right-0 z-50 mt-2 min-w-52 overflow-hidden rounded-lg border shadow-lg"
+                                    id={menuId}
+                                    role="menu"
+                                >
+                                    {menuItems.map((item) => {
+                                        const Icon = item.icon;
+
+                                        return (
+                                            <Link
+                                                className="gap-space-sm px-space-md py-space-sm hover:bg-surface-container font-label-editorial text-label-editorial text-on-surface flex items-center transition-colors"
+                                                href={item.href}
+                                                key={item.label}
+                                                role="menuitem"
+                                                onClick={() =>
+                                                    setMenuOpen(false)
+                                                }
+                                            >
+                                                <Icon className="text-brand h-4 w-4" />
+                                                <span>{item.label}</span>
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                            ) : null}
                         </div>
                     </div>
                 </div>

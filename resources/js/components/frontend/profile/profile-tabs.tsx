@@ -1,5 +1,4 @@
-import { toBengaliNumber } from '@/components/frontend/notifications/types';
-import type { ProfileTab, SortOption } from './types';
+import { toBengaliNumber, type ProfileTab, type SortOption } from './types';
 
 export default function ProfileTabs({
     activeSort,
