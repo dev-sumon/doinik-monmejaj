@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\MyArchiveController;
 use App\Http\Controllers\Frontend\NotificationsController;
 use App\Http\Controllers\Frontend\PollsController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\WeeklyRecapController;
 use App\Http\Controllers\PostAttachmentController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,7 @@ Route::get('/create', [CreateNewspaperController::class, 'index'])->name('create
 Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::get('/account-settings', [AccountSettingsController::class, 'index'])->name('account-settings');
+Route::get('/weekly-recap', [WeeklyRecapController::class, 'index'])->name('weekly-recap');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');

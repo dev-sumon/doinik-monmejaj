@@ -20,6 +20,7 @@ import {
     notifications,
     polls,
     profile,
+    weeklyRecap,
 } from '@/routes';
 
 const navItems = [
@@ -38,7 +39,7 @@ const menuItems = [
     },
     {
         label: 'সাপ্তাহিক রিক্যাপ',
-        href: myArchive.url(),
+        href: weeklyRecap.url(),
         icon: ChartColumnIcon,
     },
     {
