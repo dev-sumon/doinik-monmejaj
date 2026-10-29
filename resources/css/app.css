@@ -13,6 +13,64 @@
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
+    --font-masthead: 'Noto Serif', 'Noto Serif Bengali', serif;
+    --font-masthead-mobile: 'Noto Serif', 'Noto Serif Bengali', serif;
+    --font-headline-xl: 'Noto Serif', 'Noto Serif Bengali', serif;
+    --font-headline-lg: 'Noto Serif', 'Noto Serif Bengali', serif;
+    --font-headline-md: 'Noto Serif', 'Noto Serif Bengali', serif;
+    --font-headline-sm: 'Noto Serif', 'Noto Serif Bengali', serif;
+    --font-headline-lg-mobile: 'Noto Serif', 'Noto Serif Bengali', serif;
+    --font-headline-xl-mobile: 'Noto Serif', 'Noto Serif Bengali', serif;
+    --font-body-lg: 'Literata', 'Noto Serif Bengali', serif;
+    --font-body-md: 'Literata', 'Noto Serif Bengali', serif;
+    --font-body-sm: 'Literata', 'Noto Serif Bengali', serif;
+    --font-lead: 'Literata', 'Noto Serif Bengali', serif;
+    --font-caption: 'Literata', 'Noto Serif Bengali', serif;
+    --font-label-editorial: 'Newsreader', 'Noto Serif Bengali', serif;
+    --font-label-dateline: 'Newsreader', 'Noto Serif Bengali', serif;
+
+    --text-masthead: 56px;
+    --text-masthead--line-height: 64px;
+    --text-masthead-mobile: 36px;
+    --text-masthead-mobile--line-height: 44px;
+    --text-headline-xl: 40px;
+    --text-headline-xl--line-height: 48px;
+    --text-headline-xl-mobile: 28px;
+    --text-headline-xl-mobile--line-height: 36px;
+    --text-headline-lg: 32px;
+    --text-headline-lg--line-height: 40px;
+    --text-headline-lg-mobile: 24px;
+    --text-headline-lg-mobile--line-height: 32px;
+    --text-headline-md: 24px;
+    --text-headline-md--line-height: 32px;
+    --text-headline-sm: 20px;
+    --text-headline-sm--line-height: 28px;
+    --text-body-lg: 17px;
+    --text-body-lg--line-height: 28px;
+    --text-body-md: 15px;
+    --text-body-md--line-height: 24px;
+    --text-body-sm: 13px;
+    --text-body-sm--line-height: 20px;
+    --text-lead: 19px;
+    --text-lead--line-height: 30px;
+    --text-caption: 12px;
+    --text-caption--line-height: 18px;
+    --text-label-editorial: 13px;
+    --text-label-editorial--line-height: 16px;
+    --text-label-dateline: 12px;
+    --text-label-dateline--line-height: 16px;
+
+    --spacing-space-xs: 0.25rem;
+    --spacing-space-sm: 0.5rem;
+    --spacing-space-md: 1rem;
+    --spacing-space-lg: 1.5rem;
+    --spacing-space-xl: 2.5rem;
+    --spacing-margin: 3rem;
+    --spacing-margin-mobile: 1.25rem;
+    --spacing-margin-tablet: 2rem;
+    --spacing-gutter: 1.5rem;
+    --spacing-gutter-mobile: 1rem;
+
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
@@ -59,6 +117,49 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+
+    /* Stitch / frontend paper palette (admin shadcn tokens untouched) */
+    --color-brand: #7d1017;
+    --color-on-brand: #ffffff;
+    --color-brand-container: #9e2a2b;
+    --color-on-brand-container: #ffb9b4;
+    --color-brand-fixed: #ffdad7;
+    --color-on-brand-fixed: #410004;
+    --color-warm: #76593a;
+    --color-on-warm: #ffffff;
+    --color-warm-container: #fed6af;
+    --color-on-warm-container: #795b3c;
+    --color-warm-fixed: #ffdcbd;
+    --color-on-warm-fixed: #2b1701;
+    --color-on-warm-fixed-variant: #5c4125;
+    --color-tertiary: #234438;
+    --color-on-tertiary: #ffffff;
+    --color-tertiary-container: #3b5c4e;
+    --color-on-tertiary-container: #aed3c1;
+    --color-tertiary-fixed: #c6ebd9;
+    --color-on-tertiary-fixed: #002116;
+    --color-on-tertiary-fixed-variant: #2c4d40;
+    --color-tertiary-fixed-dim: #aacfbd;
+    --color-brand-fixed-dim: #ffb3ae;
+    --color-error: #ba1a1a;
+    --color-on-error: #ffffff;
+    --color-surface: #fcf9f8;
+    --color-on-surface: #1c1b1b;
+    --color-on-surface-variant: #58413f;
+    --color-surface-bright: #fcf9f8;
+    --color-surface-dim: #dcd9d9;
+    --color-surface-variant: #e5e2e1;
+    --color-surface-container: #f0eded;
+    --color-surface-container-low: #f6f3f2;
+    --color-surface-container-high: #eae7e7;
+    --color-surface-container-highest: #e5e2e1;
+    --color-surface-container-lowest: #ffffff;
+    --color-outline-paper: #8b716f;
+    --color-outline-variant: #dfbfbc;
+    --color-error-container: #ffdad6;
+    --color-on-error-container: #93000a;
+    --color-inverse-surface: #313030;
+    --color-inverse-on-surface: #f3f0ef;
 }
 
 :root {

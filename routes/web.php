@@ -5,14 +5,35 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FileUploadDemoController;
+use App\Http\Controllers\Frontend\AccountSettingsController;
+use App\Http\Controllers\Frontend\CommunityFeedController;
+use App\Http\Controllers\Frontend\CreateNewspaperController;
+use App\Http\Controllers\Frontend\DailyThemeController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\MyArchiveController;
+use App\Http\Controllers\Frontend\NotificationsController;
+use App\Http\Controllers\Frontend\PollsController;
+use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\WeeklyRecapController;
 use App\Http\Controllers\PostAttachmentController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-Route::inertia('/', 'welcome', [
-    'canRegister' => Features::enabled(Features::registration()),
-])->name('home');
+// Route::inertia('/', 'welcome', [
+//     'canRegister' => Features::enabled(Features::registration()),
+// ])->name('home');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/community-feed', [CommunityFeedController::class, 'index'])->name('community-feed');
+Route::get('/daily-theme', [DailyThemeController::class, 'index'])->name('daily-theme');
+Route::get('/polls', [PollsController::class, 'index'])->name('polls');
+Route::get('/my-archive', [MyArchiveController::class, 'index'])->name('my-archive');
+Route::get('/create', [CreateNewspaperController::class, 'index'])->name('create');
+Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications');
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::get('/account-settings', [AccountSettingsController::class, 'index'])->name('account-settings');
+Route::get('/weekly-recap', [WeeklyRecapController::class, 'index'])->name('weekly-recap');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
