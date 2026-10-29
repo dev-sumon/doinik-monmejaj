@@ -6,14 +6,14 @@ import {
     CoffeeIcon,
     NotebookPenIcon,
 } from 'lucide-react';
-import { communityFeed, dailyTheme, home, polls } from '@/routes';
+import { communityFeed, dailyTheme, home, myArchive, polls } from '@/routes';
 
 const navItems = [
     { label: 'প্রচ্ছদ', href: home.url() },
     { label: 'ঘুরে দেখুন', href: communityFeed.url() },
     { label: 'আজকের বিষয়', href: dailyTheme.url() },
     { label: 'জনমত', href: polls.url() },
-    { label: 'আমার পত্রিকা', href: '#' },
+    { label: 'আমার পত্রিকা', href: myArchive.url() },
 ];
 
 export default function Header() {

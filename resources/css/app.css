@@ -123,10 +123,15 @@
     --color-on-brand: #ffffff;
     --color-brand-container: #9e2a2b;
     --color-on-brand-container: #ffb9b4;
+    --color-brand-fixed: #ffdad7;
+    --color-on-brand-fixed: #410004;
     --color-warm: #76593a;
     --color-on-warm: #ffffff;
     --color-warm-container: #fed6af;
     --color-on-warm-container: #795b3c;
+    --color-warm-fixed: #ffdcbd;
+    --color-on-warm-fixed: #2b1701;
+    --color-on-warm-fixed-variant: #5c4125;
     --color-tertiary: #234438;
     --color-on-tertiary: #ffffff;
     --color-tertiary-container: #3b5c4e;

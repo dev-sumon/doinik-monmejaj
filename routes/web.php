@@ -8,6 +8,7 @@ use App\Http\Controllers\FileUploadDemoController;
 use App\Http\Controllers\Frontend\CommunityFeedController;
 use App\Http\Controllers\Frontend\DailyThemeController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\MyArchiveController;
 use App\Http\Controllers\Frontend\PollsController;
 use App\Http\Controllers\PostAttachmentController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
@@ -22,6 +23,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/community-feed', [CommunityFeedController::class, 'index'])->name('community-feed');
 Route::get('/daily-theme', [DailyThemeController::class, 'index'])->name('daily-theme');
 Route::get('/polls', [PollsController::class, 'index'])->name('polls');
+Route::get('/my-archive', [MyArchiveController::class, 'index'])->name('my-archive');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
