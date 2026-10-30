@@ -9,6 +9,7 @@ import { initializeTheme } from '@/hooks/use-appearance';
 import { useDevErrorFallback } from '@/hooks/useDevErrorFallback';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
+import AjkerLoginLayout from '@/layouts/auth/ajker-login-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import FrontendLayout from '@/layouts/frontend/frontend-layout';
 
@@ -20,6 +21,11 @@ createInertiaApp({
         switch (true) {
             case name.startsWith('frontend/'):
                 return FrontendLayout;
+            case name === 'auth/login':
+            case name === 'auth/register':
+            case name === 'auth/forgot-password':
+            case name === 'auth/reset-password':
+                return AjkerLoginLayout;
             case name.startsWith('auth/'):
                 return AuthLayout;
             case name.startsWith('settings/'):
