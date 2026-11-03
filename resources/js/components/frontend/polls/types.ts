@@ -37,6 +37,7 @@ export type FeaturedPoll = {
     countdown: string;
     question: string;
     lead: string;
+    pollId?: number | null;
     selectedOptionId: string;
     options: PollOption[];
     totalVotes: string;

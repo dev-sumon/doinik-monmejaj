@@ -66,6 +66,32 @@ enum RoleEnum: string
                 PermissionEnum::SETTINGS_VIEW,
                 PermissionEnum::SETTINGS_EDIT,
                 PermissionEnum::SETTINGS_EXPORT,
+
+                PermissionEnum::ARTICLES_INDEX,
+                PermissionEnum::ARTICLES_VIEW,
+                PermissionEnum::ARTICLES_CREATE,
+                PermissionEnum::ARTICLES_EDIT,
+                PermissionEnum::ARTICLES_DELETE,
+                PermissionEnum::ARTICLES_PUBLISH,
+
+                PermissionEnum::CATEGORIES_INDEX,
+                PermissionEnum::CATEGORIES_VIEW,
+                PermissionEnum::CATEGORIES_CREATE,
+                PermissionEnum::CATEGORIES_EDIT,
+                PermissionEnum::CATEGORIES_DELETE,
+
+                PermissionEnum::DAILY_THEMES_INDEX,
+                PermissionEnum::DAILY_THEMES_VIEW,
+                PermissionEnum::DAILY_THEMES_CREATE,
+                PermissionEnum::DAILY_THEMES_EDIT,
+                PermissionEnum::DAILY_THEMES_DELETE,
+
+                PermissionEnum::POLLS_INDEX,
+                PermissionEnum::POLLS_VIEW,
+                PermissionEnum::POLLS_CREATE,
+                PermissionEnum::POLLS_EDIT,
+                PermissionEnum::POLLS_DELETE,
+                PermissionEnum::POLLS_PUBLISH,
             ],
 
             self::EDITOR => [
@@ -76,6 +102,25 @@ enum RoleEnum: string
                 PermissionEnum::POSTS_PUBLISH,
                 PermissionEnum::FILE_UPLOAD_INDEX,
                 PermissionEnum::FILE_UPLOAD_STORE,
+
+                PermissionEnum::ARTICLES_INDEX,
+                PermissionEnum::ARTICLES_VIEW,
+                PermissionEnum::ARTICLES_CREATE,
+                PermissionEnum::ARTICLES_EDIT,
+                PermissionEnum::ARTICLES_PUBLISH,
+
+                PermissionEnum::CATEGORIES_INDEX,
+                PermissionEnum::CATEGORIES_VIEW,
+                PermissionEnum::CATEGORIES_CREATE,
+                PermissionEnum::CATEGORIES_EDIT,
+
+                PermissionEnum::DAILY_THEMES_INDEX,
+                PermissionEnum::DAILY_THEMES_VIEW,
+                PermissionEnum::DAILY_THEMES_CREATE,
+                PermissionEnum::DAILY_THEMES_EDIT,
+
+                PermissionEnum::POLLS_INDEX,
+                PermissionEnum::POLLS_VIEW,
             ],
 
             self::AUTHOR => [
@@ -83,11 +128,25 @@ enum RoleEnum: string
                 PermissionEnum::POSTS_VIEW,
                 PermissionEnum::POSTS_CREATE,
                 PermissionEnum::POSTS_EDIT,
+
+                PermissionEnum::ARTICLES_INDEX,
+                PermissionEnum::ARTICLES_VIEW,
+                PermissionEnum::ARTICLES_CREATE,
+                PermissionEnum::ARTICLES_EDIT,
             ],
 
             self::VIEWER => [
                 PermissionEnum::DASHBOARD_VIEW,
                 PermissionEnum::POSTS_VIEW,
+
+                PermissionEnum::ARTICLES_INDEX,
+                PermissionEnum::ARTICLES_VIEW,
+                PermissionEnum::CATEGORIES_INDEX,
+                PermissionEnum::CATEGORIES_VIEW,
+                PermissionEnum::DAILY_THEMES_INDEX,
+                PermissionEnum::DAILY_THEMES_VIEW,
+                PermissionEnum::POLLS_INDEX,
+                PermissionEnum::POLLS_VIEW,
             ],
 
             self::USER => [

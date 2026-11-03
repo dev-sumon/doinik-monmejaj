@@ -1,16 +1,20 @@
 import { Link } from '@inertiajs/react';
 import {
-    BookOpen,
-    FolderGit2,
+    CalendarDays,
+    ExternalLink,
     KeyRound,
     LayoutGrid,
-    LockKeyhole,
+    Newspaper,
     Settings,
     Shield,
     ShieldCheck,
-    Upload,
+    Tags,
     User,
     Users,
+    Vote,
+    FolderOpen,
+    MessagesSquare,
+    LockKeyhole,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -26,11 +30,16 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard, home } from '@/routes';
+import adminArticles from '@/routes/admin/articles';
+import adminCategories from '@/routes/admin/categories';
+import adminDailyThemes from '@/routes/admin/daily-themes';
 import adminPermissions from '@/routes/admin/permissions';
+import adminPolls from '@/routes/admin/polls';
 import adminRoles from '@/routes/admin/roles';
 import adminUsers from '@/routes/admin/users';
-import { index as fileUploadDemo } from '@/routes/file-upload-demo';
+import { edit as editProfile } from '@/routes/profile';
+import { edit as editSecurity } from '@/routes/security';
 import type { NavItem } from '@/types';
 import { PERMISSIONS } from '@/types/permissions';
 
@@ -45,10 +54,46 @@ const mainNav: NavNode[] = [
         permissions: [PERMISSIONS.DASHBOARD.VIEW],
     },
     {
-        title: 'File Upload Demo',
-        href: fileUploadDemo(),
-        icon: Upload,
-        permissions: [PERMISSIONS.FILE_UPLOAD.INDEX],
+        title: 'Content',
+        icon: FolderOpen,
+        permissions: [
+            PERMISSIONS.ARTICLES.INDEX,
+            PERMISSIONS.CATEGORIES.INDEX,
+            PERMISSIONS.DAILY_THEMES.INDEX,
+        ],
+        items: [
+            {
+                title: 'Articles',
+                href: adminArticles.index(),
+                icon: Newspaper,
+                permissions: [PERMISSIONS.ARTICLES.INDEX],
+            },
+            {
+                title: 'Categories',
+                href: adminCategories.index(),
+                icon: Tags,
+                permissions: [PERMISSIONS.CATEGORIES.INDEX],
+            },
+            {
+                title: 'Daily Themes',
+                href: adminDailyThemes.index(),
+                icon: CalendarDays,
+                permissions: [PERMISSIONS.DAILY_THEMES.INDEX],
+            },
+        ],
+    },
+    {
+        title: 'Engagement',
+        icon: MessagesSquare,
+        permissions: [PERMISSIONS.POLLS.INDEX],
+        items: [
+            {
+                title: 'Polls',
+                href: adminPolls.index(),
+                icon: Vote,
+                permissions: [PERMISSIONS.POLLS.INDEX],
+            },
+        ],
     },
     {
         title: 'Access Control',
@@ -77,34 +122,21 @@ const mainNav: NavNode[] = [
                 icon: KeyRound,
                 permissions: [PERMISSIONS.PERMISSIONS.INDEX],
             },
+        ],
+    },
+    {
+        title: 'Settings',
+        icon: Settings,
+        items: [
             {
-                title: 'Settings',
-                icon: Settings,
-                permissions: [PERMISSIONS.SETTINGS.INDEX],
-                classNames: {
-                    icon: 'size-5',
-                },
-                items: [
-                    {
-                        title: 'Profile',
-                        href: '#',
-                        icon: User,
-                        permissions: [PERMISSIONS.SETTINGS.INDEX],
-                    },
-                    {
-                        title: 'Security',
-                        icon: Shield,
-                        permissions: [PERMISSIONS.SETTINGS.INDEX],
-                        items: [
-                            {
-                                title: 'Password',
-                                href: '#',
-                                icon: LockKeyhole,
-                                permissions: [PERMISSIONS.SETTINGS.INDEX],
-                            },
-                        ],
-                    },
-                ],
+                title: 'Profile',
+                href: editProfile(),
+                icon: User,
+            },
+            {
+                title: 'Security',
+                href: editSecurity(),
+                icon: LockKeyhole,
             },
         ],
     },
@@ -112,14 +144,9 @@ const mainNav: NavNode[] = [
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'View website',
+        href: home(),
+        icon: ExternalLink,
     },
 ];
 

@@ -21,6 +21,36 @@ enum PermissionEnum: string
     case POSTS_DELETE = 'posts.delete';
     case POSTS_PUBLISH = 'posts.publish';
 
+    // ARTICLES
+    case ARTICLES_INDEX = 'articles.index';
+    case ARTICLES_VIEW = 'articles.view';
+    case ARTICLES_CREATE = 'articles.create';
+    case ARTICLES_EDIT = 'articles.edit';
+    case ARTICLES_DELETE = 'articles.delete';
+    case ARTICLES_PUBLISH = 'articles.publish';
+
+    // CATEGORIES
+    case CATEGORIES_INDEX = 'categories.index';
+    case CATEGORIES_VIEW = 'categories.view';
+    case CATEGORIES_CREATE = 'categories.create';
+    case CATEGORIES_EDIT = 'categories.edit';
+    case CATEGORIES_DELETE = 'categories.delete';
+
+    // DAILY THEMES
+    case DAILY_THEMES_INDEX = 'daily-themes.index';
+    case DAILY_THEMES_VIEW = 'daily-themes.view';
+    case DAILY_THEMES_CREATE = 'daily-themes.create';
+    case DAILY_THEMES_EDIT = 'daily-themes.edit';
+    case DAILY_THEMES_DELETE = 'daily-themes.delete';
+
+    // POLLS
+    case POLLS_INDEX = 'polls.index';
+    case POLLS_VIEW = 'polls.view';
+    case POLLS_CREATE = 'polls.create';
+    case POLLS_EDIT = 'polls.edit';
+    case POLLS_DELETE = 'polls.delete';
+    case POLLS_PUBLISH = 'polls.publish';
+
     // USERS
     case USERS_INDEX = 'users.index';
     case USERS_VIEW = 'users.view';
@@ -69,6 +99,32 @@ enum PermissionEnum: string
             self::POSTS_EDIT,
             self::POSTS_DELETE,
             self::POSTS_PUBLISH => 'Posts',
+
+            self::ARTICLES_INDEX,
+            self::ARTICLES_VIEW,
+            self::ARTICLES_CREATE,
+            self::ARTICLES_EDIT,
+            self::ARTICLES_DELETE,
+            self::ARTICLES_PUBLISH => 'Articles',
+
+            self::CATEGORIES_INDEX,
+            self::CATEGORIES_VIEW,
+            self::CATEGORIES_CREATE,
+            self::CATEGORIES_EDIT,
+            self::CATEGORIES_DELETE => 'Categories',
+
+            self::DAILY_THEMES_INDEX,
+            self::DAILY_THEMES_VIEW,
+            self::DAILY_THEMES_CREATE,
+            self::DAILY_THEMES_EDIT,
+            self::DAILY_THEMES_DELETE => 'Daily Themes',
+
+            self::POLLS_INDEX,
+            self::POLLS_VIEW,
+            self::POLLS_CREATE,
+            self::POLLS_EDIT,
+            self::POLLS_DELETE,
+            self::POLLS_PUBLISH => 'Polls',
 
             self::USERS_INDEX,
             self::USERS_VIEW,

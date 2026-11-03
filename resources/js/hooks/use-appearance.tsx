@@ -10,15 +10,7 @@ export type UseAppearanceReturn = {
 };
 
 const listeners = new Set<() => void>();
-let currentAppearance: Appearance = 'system';
-
-const prefersDark = (): boolean => {
-    if (typeof window === 'undefined') {
-        return false;
-    }
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-};
+let currentAppearance: Appearance = 'light';
 
 const setCookie = (name: string, value: string, days = 365): void => {
     if (typeof document === 'undefined') {
@@ -34,11 +26,12 @@ const getStoredAppearance = (): Appearance => {
         return 'system';
     }
 
-    return (localStorage.getItem('appearance') as Appearance) || 'system';
+    return 'light';
 };
 
-const isDarkMode = (appearance: Appearance): boolean => {
-    return appearance === 'dark' || (appearance === 'system' && prefersDark());
+/** The app is light-only: dark mode is intentionally disabled. */
+const isDarkMode = (_appearance: Appearance): boolean => {
+    return false;
 };
 
 const applyTheme = (appearance: Appearance): void => {
@@ -76,8 +69,8 @@ export function initializeTheme(): void {
     }
 
     if (!localStorage.getItem('appearance')) {
-        localStorage.setItem('appearance', 'system');
-        setCookie('appearance', 'system');
+        localStorage.setItem('appearance', 'light');
+        setCookie('appearance', 'light');
     }
 
     currentAppearance = getStoredAppearance();
@@ -91,7 +84,7 @@ export function useAppearance(): UseAppearanceReturn {
     const appearance: Appearance = useSyncExternalStore(
         subscribe,
         () => currentAppearance,
-        () => 'system',
+        () => 'light',
     );
 
     const resolvedAppearance: ResolvedAppearance = isDarkMode(appearance)

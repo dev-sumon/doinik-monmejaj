@@ -2,6 +2,7 @@
 
 use App\Enums\PermissionEnum;
 use App\Enums\RoleEnum;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\MyArchiveController;
 use App\Http\Controllers\Frontend\NotificationsController;
 use App\Http\Controllers\Frontend\PollsController;
+use App\Http\Controllers\Frontend\PollVoteController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\WeeklyRecapController;
 use App\Http\Controllers\PostAttachmentController;
@@ -31,6 +33,8 @@ Route::get('/daily-theme', [DailyThemeController::class, 'index'])->name('daily-
 Route::get('/polls', [PollsController::class, 'index'])->name('polls');
 
 Route::middleware('auth')->group(function () {
+    Route::post('/polls/{poll}/vote', [PollVoteController::class, 'store'])
+        ->middleware('throttle:30,1')->name('polls.vote');
     Route::get('/my-archive', [MyArchiveController::class, 'index'])->name('my-archive');
     Route::get('/create', [CreateNewspaperController::class, 'index'])->name('create');
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications');
@@ -40,7 +44,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard')
+    Route::get('dashboard', DashboardController::class)->name('dashboard')
         ->middleware([
             'role:'.collect(RoleEnum::cases())->reject(fn (RoleEnum $role) => $role === RoleEnum::USER)->map->value->implode('|'),
             'permission:'.PermissionEnum::DASHBOARD_VIEW->value,
@@ -101,6 +105,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('permissions/export', 'export')->name('permissions.export')
                 ->middleware('permission:'.PermissionEnum::PERMISSIONS_EXPORT->value);
         });
+
+        // Content: articles, categories, daily themes and polls.
+        require __DIR__.'/admin-content.php';
     });
 });
 

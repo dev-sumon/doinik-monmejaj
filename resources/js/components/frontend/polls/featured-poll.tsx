@@ -6,7 +6,10 @@ import {
     Share2Icon,
     UsersIcon,
 } from 'lucide-react';
+import { router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import { login } from '@/routes';
+import { vote } from '@/routes/polls';
 import PollOptionBar from './poll-option-bar';
 import type { FeaturedPoll as FeaturedPollType } from './types';
 
@@ -15,27 +18,59 @@ export default function FeaturedPoll({
 }: {
     featured: FeaturedPollType;
 }) {
-    const [selectedId, setSelectedId] = useState(featured.selectedOptionId);
+    const { props } = usePage();
+    const isSignedIn = Boolean(props.auth?.user);
+    const [localSelectedId, setLocalSelectedId] = useState(
+        featured.selectedOptionId,
+    );
     const [opinion, setOpinion] = useState('');
 
+    // Real polls are voted on the server; the demo poll stays client-side.
+    const isLivePoll = typeof featured.pollId === 'number';
+    const selectedId = isLivePoll ? featured.selectedOptionId : localSelectedId;
+
+    const handleSelect = (optionId: string): void => {
+        if (!isLivePoll) {
+            setLocalSelectedId(optionId);
+
+            return;
+        }
+
+        if (!isSignedIn) {
+            router.visit(login());
+
+            return;
+        }
+
+        if (featured.selectedOptionId) {
+            return;
+        }
+
+        router.post(
+            vote.url(featured.pollId as number),
+            { option_id: Number(optionId) },
+            { preserveScroll: true },
+        );
+    };
+
     return (
-        <section className="bg-surface-container-lowest overflow-hidden rounded-xl shadow-md">
+        <section className="overflow-hidden rounded-xl bg-surface-container-lowest shadow-md">
             <div className="grid grid-cols-1 gap-0 lg:grid-cols-12">
-                <div className="p-space-lg md:p-space-xl flex flex-col justify-between lg:col-span-7">
+                <div className="flex flex-col justify-between p-space-lg md:p-space-xl lg:col-span-7">
                     <div>
-                        <div className="mb-space-sm gap-space-sm flex flex-wrap items-center justify-between">
-                            <span className="bg-brand text-on-brand font-label-editorial text-label-editorial rounded px-space-sm py-0.5">
+                        <div className="mb-space-sm flex flex-wrap items-center justify-between gap-space-sm">
+                            <span className="rounded bg-brand px-space-sm py-0.5 font-label-editorial text-label-editorial text-on-brand">
                                 {featured.badge}
                             </span>
-                            <div className="text-warm font-label-dateline text-label-dateline flex items-center gap-1">
+                            <div className="flex items-center gap-1 font-label-dateline text-label-dateline text-warm">
                                 <HourglassIcon className="h-4 w-4" />
                                 <span>{featured.countdown}</span>
                             </div>
                         </div>
-                        <h2 className="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-space-sm font-bold leading-snug">
+                        <h2 className="mb-space-sm font-headline-lg-mobile text-headline-lg-mobile leading-snug font-bold text-on-surface md:font-headline-lg md:text-headline-lg">
                             {featured.question}
                         </h2>
-                        <p className="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+                        <p className="mb-space-lg font-body-md text-body-md text-on-surface-variant">
                             {featured.lead}
                         </p>
                         <div className="space-y-space-md">
@@ -49,26 +84,26 @@ export default function FeaturedPoll({
                                     percent={option.percent}
                                     selected={selectedId === option.id}
                                     votesLabel={option.votesLabel}
-                                    onSelect={() => setSelectedId(option.id)}
+                                    onSelect={() => handleSelect(option.id)}
                                 />
                             ))}
                         </div>
                     </div>
-                    <div className="mt-space-lg pt-space-md bg-surface-container-low p-space-md gap-space-md flex flex-wrap items-center justify-between rounded-lg">
-                        <div className="gap-space-md text-on-surface-variant font-caption text-caption flex flex-wrap items-center">
-                            <span className="text-on-surface flex items-center gap-1 font-semibold">
-                                <UsersIcon className="text-brand h-4 w-4" />
+                    <div className="mt-space-lg flex flex-wrap items-center justify-between gap-space-md rounded-lg bg-surface-container-low p-space-md pt-space-md">
+                        <div className="flex flex-wrap items-center gap-space-md font-caption text-caption text-on-surface-variant">
+                            <span className="flex items-center gap-1 font-semibold text-on-surface">
+                                <UsersIcon className="h-4 w-4 text-brand" />
                                 {featured.totalVotes}
                             </span>
                             <span>•</span>
                             <span className="flex items-center gap-1">
-                                <MessagesSquareIcon className="text-warm h-4 w-4" />
+                                <MessagesSquareIcon className="h-4 w-4 text-warm" />
                                 {featured.commentsCount}
                             </span>
                         </div>
-                        <div className="gap-space-sm flex flex-wrap items-center">
+                        <div className="flex flex-wrap items-center gap-space-sm">
                             <button
-                                className="bg-surface-container hover:bg-surface-container-high text-on-surface font-label-editorial text-label-editorial inline-flex items-center gap-1 rounded px-space-md py-space-xs transition-colors"
+                                className="inline-flex items-center gap-1 rounded bg-surface-container px-space-md py-space-xs font-label-editorial text-label-editorial text-on-surface transition-colors hover:bg-surface-container-high"
                                 type="button"
                                 onClick={() =>
                                     window.alert('ভোটের লিংক কপি করা হয়েছে!')
@@ -78,7 +113,7 @@ export default function FeaturedPoll({
                                 <span>শেয়ার করুন</span>
                             </button>
                             <button
-                                className="bg-brand text-on-brand hover:bg-brand-container font-label-editorial text-label-editorial inline-flex items-center gap-1 rounded px-space-md py-space-xs transition-colors"
+                                className="inline-flex items-center gap-1 rounded bg-brand px-space-md py-space-xs font-label-editorial text-label-editorial text-on-brand transition-colors hover:bg-brand-container"
                                 type="button"
                             >
                                 <MessageCircleIcon className="h-4 w-4" />
@@ -87,22 +122,22 @@ export default function FeaturedPoll({
                         </div>
                     </div>
                 </div>
-                <div className="bg-surface-container-low p-space-lg md:p-space-xl flex flex-col justify-between lg:col-span-5">
+                <div className="flex flex-col justify-between bg-surface-container-low p-space-lg md:p-space-xl lg:col-span-5">
                     <div>
-                        <div className="mb-space-md relative h-48 w-full overflow-hidden rounded-lg shadow-sm">
+                        <div className="relative mb-space-md h-48 w-full overflow-hidden rounded-lg shadow-sm">
                             <img
                                 alt={featured.vignette.alt}
                                 className="h-full w-full object-cover"
                                 src={featured.vignette.image}
                             />
-                            <div className="from-inverse-surface/80 via-inverse-surface/20 absolute inset-0 flex items-end bg-gradient-to-t to-transparent p-space-md">
-                                <p className="text-surface-bright font-caption text-caption italic">
+                            <div className="absolute inset-0 flex items-end bg-gradient-to-t from-inverse-surface/80 via-inverse-surface/20 to-transparent p-space-md">
+                                <p className="font-caption text-caption text-surface-bright italic">
                                     {featured.vignette.caption}
                                 </p>
                             </div>
                         </div>
                         <div className="mb-space-sm flex items-center justify-between">
-                            <h3 className="font-headline-sm text-headline-sm text-on-surface font-semibold">
+                            <h3 className="font-headline-sm text-headline-sm font-semibold text-on-surface">
                                 {featured.opinionsTitle}
                             </h3>
                             <span className="font-label-dateline text-label-dateline text-brand">
@@ -112,18 +147,18 @@ export default function FeaturedPoll({
                         <div className="space-y-space-sm">
                             {featured.opinions.map((item) => (
                                 <div
-                                    className="p-space-sm bg-surface-container-lowest rounded-lg shadow-sm"
+                                    className="rounded-lg bg-surface-container-lowest p-space-sm shadow-sm"
                                     key={`${item.author}-${item.time}`}
                                 >
                                     <div className="mb-1 flex items-center justify-between gap-space-xs">
-                                        <span className="font-body-sm text-body-sm text-on-surface font-bold">
+                                        <span className="font-body-sm text-body-sm font-bold text-on-surface">
                                             {item.author}
                                         </span>
-                                        <span className="font-caption text-caption text-warm shrink-0">
+                                        <span className="shrink-0 font-caption text-caption text-warm">
                                             {item.time}
                                         </span>
                                     </div>
-                                    <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                                    <p className="font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
                                         {item.body}
                                     </p>
                                 </div>
@@ -131,9 +166,9 @@ export default function FeaturedPoll({
                         </div>
                     </div>
                     <div className="mt-space-md pt-space-sm">
-                        <div className="gap-space-xs bg-surface-container-lowest p-space-xs flex items-center rounded-lg shadow-sm">
+                        <div className="flex items-center gap-space-xs rounded-lg bg-surface-container-lowest p-space-xs shadow-sm">
                             <input
-                                className="font-body-sm text-body-sm text-on-surface px-space-xs w-full bg-transparent py-1 focus:outline-none"
+                                className="w-full bg-transparent px-space-xs py-1 font-body-sm text-body-sm text-on-surface focus:outline-none"
                                 placeholder={featured.opinionPlaceholder}
                                 type="text"
                                 value={opinion}
@@ -142,7 +177,7 @@ export default function FeaturedPoll({
                                 }
                             />
                             <button
-                                className="bg-brand text-on-brand hover:bg-brand-container flex shrink-0 items-center gap-1 rounded px-space-sm py-1 text-sm font-medium transition-colors"
+                                className="flex shrink-0 items-center gap-1 rounded bg-brand px-space-sm py-1 text-sm font-medium text-on-brand transition-colors hover:bg-brand-container"
                                 type="button"
                                 onClick={() => {
                                     if (opinion.trim()) {
