@@ -91,7 +91,6 @@ enum RoleEnum: string
             ],
 
             self::USER => [
-                PermissionEnum::DASHBOARD_VIEW,
                 PermissionEnum::POSTS_VIEW,
             ],
         };

@@ -1,9 +1,13 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
 
+uses(RefreshDatabase::class);
+
 test('account settings page can be rendered', function () {
-    $response = $this->get(route('account-settings'));
+    $response = $this->actingAs(User::factory()->create())->get(route('account-settings'));
 
     $response->assertOk();
 
@@ -16,4 +20,8 @@ test('account settings page can be rendered', function () {
         ->has('privacy.commentRules', 3)
         ->has('dangerZone.title'),
     );
+});
+
+test('guests are redirected to login from account-settings', function () {
+    $this->get(route('account-settings'))->assertRedirect(route('login'));
 });

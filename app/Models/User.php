@@ -35,6 +35,24 @@ class User extends Authenticatable
     }
 
     /**
+     * Whether this account only holds the public "user" role (or no role at all).
+     */
+    public function isPublicUser(): bool
+    {
+        return $this->roles->pluck('name')
+            ->diff([RoleEnum::USER->value])
+            ->isEmpty();
+    }
+
+    /**
+     * Named route this account lands on right after authenticating.
+     */
+    public function homeRouteName(): string
+    {
+        return $this->isPublicUser() ? 'profile' : 'dashboard';
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

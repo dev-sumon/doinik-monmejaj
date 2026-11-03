@@ -1,9 +1,13 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
 
+uses(RefreshDatabase::class);
+
 test('notifications page can be rendered', function () {
-    $response = $this->get(route('notifications'));
+    $response = $this->actingAs(User::factory()->create())->get(route('notifications'));
 
     $response->assertOk();
 
@@ -19,4 +23,8 @@ test('notifications page can be rendered', function () {
         ->has('sidebar.guidelines.title')
         ->has('footer.loadMoreLabel'),
     );
+});
+
+test('guests are redirected to login from notifications', function () {
+    $this->get(route('notifications'))->assertRedirect(route('login'));
 });

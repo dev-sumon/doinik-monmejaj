@@ -1,9 +1,13 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
 
+uses(RefreshDatabase::class);
+
 test('weekly recap page can be rendered', function () {
-    $response = $this->get(route('weekly-recap'));
+    $response = $this->actingAs(User::factory()->create())->get(route('weekly-recap'));
 
     $response->assertOk();
 
@@ -17,4 +21,8 @@ test('weekly recap page can be rendered', function () {
         ->has('quotes.items', 3)
         ->has('closing.author'),
     );
+});
+
+test('guests are redirected to login from weekly-recap', function () {
+    $this->get(route('weekly-recap'))->assertRedirect(route('login'));
 });

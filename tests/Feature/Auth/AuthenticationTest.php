@@ -1,8 +1,18 @@
 <?php
 
+use App\Enums\RoleEnum;
 use App\Models\User;
+use Database\Seeders\PermissionSeeder;
+use Database\Seeders\RoleSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Fortify\Features;
+
+uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->seed([PermissionSeeder::class, RoleSeeder::class]);
+});
 
 test('login screen can be rendered', function () {
     $response = $this->get(route('login'));
@@ -10,8 +20,22 @@ test('login screen can be rendered', function () {
     $response->assertOk();
 });
 
-test('users can authenticate using the login screen', function () {
+test('public users are redirected to their profile after login', function () {
     $user = User::factory()->create();
+    $user->assignRole(RoleEnum::USER->value);
+
+    $response = $this->post(route('login.store'), [
+        'email' => $user->email,
+        'password' => 'password',
+    ]);
+
+    $this->assertAuthenticated();
+    $response->assertRedirect(route('profile', absolute: false));
+});
+
+test('admin roles are redirected to the dashboard after login', function (RoleEnum $role) {
+    $user = User::factory()->create();
+    $user->assignRole($role->value);
 
     $response = $this->post(route('login.store'), [
         'email' => $user->email,
@@ -20,7 +44,7 @@ test('users can authenticate using the login screen', function () {
 
     $this->assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
-});
+})->with([RoleEnum::SUPER_ADMIN, RoleEnum::ADMIN, RoleEnum::EDITOR]);
 
 test('users with two factor enabled are redirected to two factor challenge', function () {
     $this->skipUnlessFortifyHas(Features::twoFactorAuthentication());

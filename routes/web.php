@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
@@ -28,15 +29,22 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/community-feed', [CommunityFeedController::class, 'index'])->name('community-feed');
 Route::get('/daily-theme', [DailyThemeController::class, 'index'])->name('daily-theme');
 Route::get('/polls', [PollsController::class, 'index'])->name('polls');
-Route::get('/my-archive', [MyArchiveController::class, 'index'])->name('my-archive');
-Route::get('/create', [CreateNewspaperController::class, 'index'])->name('create');
-Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications');
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-Route::get('/account-settings', [AccountSettingsController::class, 'index'])->name('account-settings');
-Route::get('/weekly-recap', [WeeklyRecapController::class, 'index'])->name('weekly-recap');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/my-archive', [MyArchiveController::class, 'index'])->name('my-archive');
+    Route::get('/create', [CreateNewspaperController::class, 'index'])->name('create');
+    Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/account-settings', [AccountSettingsController::class, 'index'])->name('account-settings');
+    Route::get('/weekly-recap', [WeeklyRecapController::class, 'index'])->name('weekly-recap');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::inertia('dashboard', 'dashboard')->name('dashboard')
+        ->middleware([
+            'role:'.collect(RoleEnum::cases())->reject(fn (RoleEnum $role) => $role === RoleEnum::USER)->map->value->implode('|'),
+            'permission:'.PermissionEnum::DASHBOARD_VIEW->value,
+        ]);
 
     // ── Demo landing page ─────────────────────────────────────────────────────
     Route::get('/file-upload-demo', [FileUploadDemoController::class, 'index'])
